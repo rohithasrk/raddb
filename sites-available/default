@@ -402,7 +402,8 @@ authorize {
 	#  is meant to mirror the "users" file.
 	#
 	#  See "Authorization Queries" in mods-available/sql
-	-sql
+	sql
+	rest
 
 	#
 	#  If you are using /etc/smbpasswd, and are also doing
@@ -500,13 +501,13 @@ authenticate {
 	#
 	#  For old names, too.
 	#
-	mschap
+#	mschap
 
 	#
 	#  If you have a Cisco SIP server authenticating against
 	#  FreeRADIUS, uncomment the following line, and the 'digest'
 	#  line in the 'authorize' section.
-	digest
+#	digest
 
 	#
 	#  Pluggable Authentication Modules.
@@ -529,7 +530,7 @@ authenticate {
 
 	#
 	#  Allow EAP authentication.
-	eap
+#	eap
 
 	#
 	#  The older configurations sent a number of attributes in
@@ -627,8 +628,8 @@ accounting {
 	#
 	#  Due to packet losses in the network, the data here
 	#  may be incorrect.  There is little we can do about it.
-#	radutmp
-#	sradutmp
+	radutmp
+	sradutmp
 
 	#  Return an address to the IP Pool when we see a stop record.
 #	main_pool
@@ -637,7 +638,7 @@ accounting {
 	#  Log traffic to an SQL database.
 	#
 	#  See "Accounting queries" in mods-available/sql
-	-sql
+	sql
 
 	#
 	#  If you receive stop packets with zero session length,
@@ -668,6 +669,7 @@ accounting {
 #	Acct-Type Status-Server {
 #
 #	}
+	rest
 }
 
 
@@ -675,11 +677,11 @@ accounting {
 #  or rlm_sql module can handle this.
 #  The rlm_sql module is *much* faster
 session {
-#	radutmp
+	radutmp
 
 	#
 	#  See "Simultaneous Use Checking Queries" in mods-available/sql
-#	sql
+	sql
 }
 
 
@@ -697,7 +699,7 @@ post-auth {
 #			State := "0x%{randstr:16h}"
 #		}
 #	}
-
+	acct_unique
 	#
 	#  For EAP-TTLS and PEAP, add the cached attributes to the reply.
 	#  The "session-state" attributes are automatically cached when

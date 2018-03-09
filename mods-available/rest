@@ -36,7 +36,7 @@ rest {
 	#
 	# If you wish to disable this pre-caching and reachability check,
 	# comment out the configuration item below.
-	connect_uri = "http://127.0.0.1/"
+	connect_uri = "http://127.0.0.1:8000"
 
 	#
 	#  How long before new connection attempts timeout, defaults to 4.0 seconds.
@@ -138,15 +138,13 @@ rest {
 	#  5xx    server error  no            fail
 	#  xxx    -             no            invalid
 	authorize {
-		uri = "${..connect_uri}/user/%{User-Name}/mac/%{Called-Station-ID}?action=authorize"
-		method = 'get'
-		tls = ${..tls}
+	    uri = "${..connect_uri}/api/authorize/"
+	    method = 'post'
+	    body = 'json'
+	    data = '{"username": "%{User-Name}", "password": "%{User-Password}"}'
+	    tls = ${..tls}
 	}
-	authenticate {
-		uri = "${..connect_uri}/user/%{User-Name}/mac/%{Called-Station-ID}?action=authenticate"
-		method = 'get'
-		tls = ${..tls}
-	}
+	authenticate {}
 
 	#  Accounting/Post-auth
 	#
@@ -156,14 +154,18 @@ rest {
 	#  5xx    server error  no            fail
 	#  xxx    -             no            invalid
 	accounting {
-		uri = "${..connect_uri}/user/%{User-Name}/sessions/%{Acct-Unique-Session-ID}"
-		method = 'post'
-		tls = ${..tls}
+	    uri = "${..connect_uri}/api/accounting/"
+	    method = 'post'
+	    body = 'json'
+	    data = '{"status_type": "%{Acct-Status-Type}", "session_id": "%{Acct-Session-Id}", "unique_id": "%{Acct-Unique-Session-Id}", "username": "%{User-Name}", "realm": "%{Realm}", "nas_ip_address": "%{NAS-IP-Address}", "nas_port_id": "%{NAS-Port}", "nas_port_type": "%{NAS-Port-Type}", "session_time": "%{Acct-Session-Time}", "authentication": "%{Acct-Authentic}", "input_octets": "%{Acct-Input-Octets}", "output_octets": "%{Acct-Output-Octets}", "called_station_id": "%{Called-Station-Id}", "calling_station_id": "%{Calling-Station-Id}", "terminate_cause": "%{Acct-Terminate-Cause}", "service_type": "%{Service-Type}", "framed_protocol": "%{Framed-Protocol}", "framed_ip_address": "%{Framed-IP-Address}"}'
+	    tls = ${..tls}	
 	}
 	post-auth {
-		uri = "${..connect_uri}/user/%{User-Name}/mac/%{Called-Station-ID}?action=post-auth"
-		method = 'post'
-		tls = ${..tls}
+	    uri = "${..connect_uri}/api/postauth/"
+	    method = 'post'
+	    body = 'json'
+	    data = '{"username": "%{User-Name}", "password": "%{User-Password}", "reply": "%{reply:Packet-Type}", "called_station_id": "%{Called-Station-ID}", "calling_station_id": "%{Calling-Station-ID}"}'
+	    tls = ${..tls}	
 	}
 
 	#

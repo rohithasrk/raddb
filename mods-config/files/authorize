@@ -1,4 +1,5 @@
 testing Cleartext-Password := "password"
+"alice" Cleartext-Password := "passme",Simultaneous-Use := 1
 
 #
 # 	Configuration file for the rlm_files module.
