@@ -1,0 +1,8 @@
+sqlcounter noresetcounter {
+    counter_name = 'Max-All-Session-Time'
+    check_name = 'Max-All-Session'
+    sql_module_instance = sql
+    key = 'User-Name'
+    reset = never
+    query = "SELECT SUM(AcctSessionTime) FROM radacct WHERE UserName='%{${key}}'"
+}

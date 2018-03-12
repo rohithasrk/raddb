@@ -88,10 +88,10 @@ sql {
 
 	# Connection info:
 	#
-#	server = "localhost"
-#	port = 5432
-#	login = "radius"
-#	password = "radpass"
+	server = "localhost"
+	port = 5432
+	login = "radius"
+	password = "raddpass"
 
 	# Database table configuration for everything except Oracle
 	radius_db = "radius"
