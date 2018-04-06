@@ -76,7 +76,7 @@ counter daily {
 	counter_name = Daily-Session-Time
 	check_name = Max-Daily-Session
 	reply_name = Session-Timeout
-	allowed_service_type = Framed-User
+#	allowed_service_type = Framed-User
 	cache_size = 5000
 }
 
