@@ -405,7 +405,7 @@ authorize {
 	#  See "Authorization Queries" in mods-available/sql
 	sql
 	rest
-	noresetcounter
+	dailybandwidthcounter
 
 	#
 	#  If you are using /etc/smbpasswd, and are also doing
