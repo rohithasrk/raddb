@@ -103,5 +103,5 @@ sqlcounter dailybandwidthcounter {
         Reply-Message = "Your daily bandwidth limit has reached"
         query = "SELECT sum(AcctOutputOctets) + sum(AcctInputOctets) FROM radacct WHERE \
                  UserName = '%{${key}}' AND \
-		 acctstarttime BETWEEN FROM_UNIXTIME('%%b') AND FROM_UNIXTIME('%%e')"
+		 AcctStartTime::ABSTIME::INT4 + AcctSessionTime > '%%b'"
 }
