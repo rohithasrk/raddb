@@ -403,9 +403,9 @@ authorize {
 	#  is meant to mirror the "users" file.
 	#
 	#  See "Authorization Queries" in mods-available/sql
+	dailybandwidthcounter
 	sql
 	rest
-	dailybandwidthcounter
 
 	#
 	#  If you are using /etc/smbpasswd, and are also doing
@@ -415,7 +415,7 @@ authorize {
 
 	#
 	#  The ldap module reads passwords from the LDAP database.
-	-ldap
+#	-ldap
 
 	#
 	#  Enforce daily limits on time spent logged in.
@@ -436,7 +436,7 @@ authorize {
 	#  This module should be listed last, so that the other modules
 	#  get a chance to set Auth-Type for themselves.
 	#
-	pap
+#	pap
 
 	#
 	#  If "status_server = yes", then Status-Server messages are passed
@@ -481,24 +481,24 @@ authenticate {
 	#  PAP authentication, when a back-end database listed
 	#  in the 'authorize' section supplies a password.  The
 	#  password can be clear-text, or encrypted.
-	Auth-Type PAP {
-		pap
-	}
+#	Auth-Type PAP {
+#		pap
+#	}
 
 	#
 	#  Most people want CHAP authentication
 	#  A back-end database listed in the 'authorize' section
 	#  MUST supply a CLEAR TEXT password.  Encrypted passwords
 	#  won't work.
-	Auth-Type CHAP {
-		chap
-	}
+#	Auth-Type CHAP {
+#		chap
+#	}
 
 	#
 	#  MSCHAP authentication.
-	Auth-Type MS-CHAP {
-		mschap
-	}
+#	Auth-Type MS-CHAP {
+#		mschap
+#	}
 
 	#
 	#  For old names, too.
@@ -556,7 +556,7 @@ authenticate {
 #  Pre-accounting.  Decide which accounting type to use.
 #
 preacct {
-	preprocess
+#	preprocess
 
 	#
 	#  Merge Acct-[Input|Output]-Gigawords and Acct-[Input-Output]-Octets
@@ -597,12 +597,12 @@ preacct {
 	#  Accounting requests are generally proxied to the same
 	#  home server as authentication requests.
 #	IPASS
-	suffix
+#	suffix
 #	ntdomain
 
 	#
 	#  Read the 'acct_users' file
-	files
+#	files
 }
 
 #
@@ -617,21 +617,21 @@ accounting {
 	#  Create a 'detail'ed log of the packets.
 	#  Note that accounting requests which are proxied
 	#  are also logged in the detail file.
-	detail
+#	detail
 #	daily
 
 	#  Update the wtmp file
 	#
 	#  If you don't use "radlast", you can delete this line.
-	unix
+#	unix
 
 	#
 	#  For Simultaneous-Use tracking.
 	#
 	#  Due to packet losses in the network, the data here
 	#  may be incorrect.  There is little we can do about it.
-	radutmp
-	sradutmp
+#	radutmp
+#	sradutmp
 
 	#  Return an address to the IP Pool when we see a stop record.
 #	main_pool
@@ -640,7 +640,8 @@ accounting {
 	#  Log traffic to an SQL database.
 	#
 	#  See "Accounting queries" in mods-available/sql
-	sql
+#	sql
+	rest
 
 	#
 	#  If you receive stop packets with zero session length,
@@ -660,10 +661,10 @@ accounting {
 #	pgsql-voip
 
 	# For Exec-Program and Exec-Program-Wait
-	exec
+#	exec
 
 	#  Filter attributes from the accounting response.
-	attr_filter.accounting_response
+#	attr_filter.accounting_response
 
 	#
 	#  See "Autz-Type Status-Server" for how this works.
@@ -671,7 +672,6 @@ accounting {
 #	Acct-Type Status-Server {
 #
 #	}
-	rest
 }
 
 
@@ -701,7 +701,7 @@ post-auth {
 #			State := "0x%{randstr:16h}"
 #		}
 #	}
-	acct_unique
+#	acct_unique
 	#
 	#  For EAP-TTLS and PEAP, add the cached attributes to the reply.
 	#  The "session-state" attributes are automatically cached when
@@ -711,9 +711,9 @@ post-auth {
 	#  The session-state attributes are automatically deleted after
 	#  an Access-Reject or Access-Accept is sent.
 	#
-	update {
-		&reply: += &session-state:
-	}
+#	update {
+#		&reply: += &session-state:
+#	}
 
 	#  Get an address from the IP Pool.
 #	main_pool
@@ -733,7 +733,8 @@ post-auth {
 	#  After authenticating the user, do another SQL query.
 	#
 	#  See "Authentication Logging Queries" in mods-available/sql
-	-sql
+#	-sql
+	rest
 
 	#
 	#  Un-comment the following if you want to modify the user's object
@@ -742,7 +743,7 @@ post-auth {
 #	ldap
 
 	# For Exec-Program and Exec-Program-Wait
-	exec
+#	exec
 
 	#
 	#  Calculate the various WiMAX keys.  In order for this to work,
@@ -832,25 +833,25 @@ post-auth {
 	#
 	Post-Auth-Type REJECT {
 		# log failed authentications in SQL, too.
-		-sql
-		attr_filter.access_reject
+#		-sql
+#		attr_filter.access_reject
 
 		# Insert EAP-Failure message if the request was
 		# rejected by policy instead of because of an
 		# authentication failure
-		eap
-
+#		eap
+		rest
 		#  Remove reply message if the response contains an EAP-Message
-		remove_reply_message_if_eap
+#		remove_reply_message_if_eap
 	}
 
 	#
 	#  Filter access challenges.
 	#
-	Post-Auth-Type Challenge {
+#	Post-Auth-Type Challenge {
 #		remove_reply_message_if_eap
 #		attr_filter.access_challenge.post-auth
-	}
+#	}
 
 }
 

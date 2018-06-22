@@ -100,7 +100,8 @@ sqlcounter dailybandwidthcounter {
         sql_module_instance = sql
         key = 'User-Name'
         reset = daily
-        Reply-Message = "Hai raggiunto il limite di banda a tua disposizione per oggi"
+        Reply-Message = "Your daily bandwidth limit has reached"
         query = "SELECT sum(AcctOutputOctets) + sum(AcctInputOctets) FROM radacct WHERE \
-                 UserName = '%{${key}}'"
+                 UserName = '%{${key}}' AND \
+		 acctstarttime BETWEEN FROM_UNIXTIME('%%b') AND FROM_UNIXTIME('%%e')"
 }
