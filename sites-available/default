@@ -405,6 +405,8 @@ authorize {
 	#  See "Authorization Queries" in mods-available/sql
 	rest
 	sql
+	dailycounter
+	noresetcounter
 	dailybandwidthcounter
 
 	#
