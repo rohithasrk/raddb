@@ -403,6 +403,11 @@ authorize {
 	#  is meant to mirror the "users" file.
 	#
 	#  See "Authorization Queries" in mods-available/sql
+
+	update control {
+            &REST-HTTP-Header += "Authorization: Bearer token123"
+        }
+
 	rest
 	sql
 	dailycounter
@@ -643,6 +648,11 @@ accounting {
 	#
 	#  See "Accounting queries" in mods-available/sql
 #	sql
+
+	update control {
+            &REST-HTTP-Header += "Authorization: Bearer token123"
+        }
+
 	rest
 
 	#
@@ -736,6 +746,11 @@ post-auth {
 	#
 	#  See "Authentication Logging Queries" in mods-available/sql
 #	-sql
+
+	update control {
+            &REST-HTTP-Header += "Authorization: Bearer token123"
+        }
+
 	rest
 
 	#
@@ -842,6 +857,11 @@ post-auth {
 		# rejected by policy instead of because of an
 		# authentication failure
 #		eap
+
+		update control {
+		    &REST-HTTP-Header += "Authorization: Bearer token123"
+		}
+
 		rest
 		#  Remove reply message if the response contains an EAP-Message
 #		remove_reply_message_if_eap
